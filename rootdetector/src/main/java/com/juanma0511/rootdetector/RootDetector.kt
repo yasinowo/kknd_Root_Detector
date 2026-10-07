@@ -22,6 +22,22 @@ object RootDetector {
     private val executor: ExecutorService = Executors.newCachedThreadPool()
     private val mainHandler = Handler(Looper.getMainLooper())
 
+    /** Starts the independent hardware-security scan through the same public facade. */
+    @JvmStatic
+    fun scanHardware(context: Context, callback: HwScanCallback) {
+        HardwareSecurity.scan(context, callback)
+    }
+
+    /** Starts the independent hardware-security scan and reports progress on the main thread. */
+    @JvmStatic
+    fun scanHardware(
+        context: Context,
+        progressListener: ScanProgressListener,
+        callback: HwScanCallback
+    ) {
+        HardwareSecurity.scan(context, progressListener, callback)
+    }
+
     @JvmStatic
     fun scan(context: Context, callback: ScanCallback) {
         scan(context, ScanProgressListener { }, callback)

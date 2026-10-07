@@ -56,7 +56,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _hwScanProgress.value = 0
         _hwScanResult.value = null
 
-        HardwareSecurity.scan(
+        RootDetector.scanHardware(
             getApplication(),
             ScanProgressListener { progress ->
                 _hwScanProgress.value = progress

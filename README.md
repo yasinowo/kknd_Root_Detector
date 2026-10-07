@@ -142,6 +142,22 @@ The aggregate `ScanStatus` is one of `CLEAN`, `SUSPICIOUS`, `ROOTED`, or `INCOMP
 The API is Kotlin-first but Java-friendly: `scan(...)` is exposed as a static method and the
 callbacks are SAM interfaces.
 
+Hardware checks are a separate operation on the same public facade. They return `HwScanResult` without changing the root scan verdict:
+
+```kotlin
+RootDetector.scanHardware(
+    context,
+    ScanProgressListener { progress -> /* 0..100 */ },
+    HwScanCallback { result ->
+        val items = result.items
+        val failures = result.failCount
+    }
+)
+```
+
+The root app calls `RootDetector.scan(...)` and `RootDetector.scanHardware(...)` separately. Both
+APIs are provided by this AAR; the hardware checks are not folded into the root verdict.
+
 #### Integration notes
 
 - The AAR merges its required manifest entries, including `QUERY_ALL_PACKAGES`, the isolated
@@ -373,6 +389,22 @@ The aggregate `ScanStatus` is one of `CLEAN`, `SUSPICIOUS`, `ROOTED`, or `INCOMP
 
 The API is Kotlin-first but Java-friendly: `scan(...)` is exposed as a static method and the
 callbacks are SAM interfaces.
+
+Hardware checks are a separate operation on the same public facade. They return `HwScanResult` without changing the root scan verdict:
+
+```kotlin
+RootDetector.scanHardware(
+    context,
+    ScanProgressListener { progress -> /* 0..100 */ },
+    HwScanCallback { result ->
+        val items = result.items
+        val failures = result.failCount
+    }
+)
+```
+
+The root app calls `RootDetector.scan(...)` and `RootDetector.scanHardware(...)` separately. Both
+APIs are provided by this AAR; the hardware checks are not folded into the root verdict.
 
 #### Integration notes
 
